@@ -1,6 +1,5 @@
-﻿#pragma kernel Init
+#pragma kernel Init
 #pragma kernel Emit
-#pragma kernel Update
 
 struct Particle
 {
