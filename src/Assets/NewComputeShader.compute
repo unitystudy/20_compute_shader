@@ -11,7 +11,6 @@ struct Particle
 };
 
 RWStructuredBuffer<Particle> _Particles;
-
 float4 _Range;
 
 float rand(float2 seed)
