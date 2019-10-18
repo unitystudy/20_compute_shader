@@ -98,7 +98,6 @@
 
             fixed4 frag (v2f i) : SV_Target
             {
-                // sample the texture
                 fixed4 col = float4(0.2, 0.7, 0.3, 1.0);
 				col.xyz = col.xyz * (max(0, dot(i.normal, float3(0.7, 0.7, 0.0))) * 0.8 + 0.2);
                 return col;
