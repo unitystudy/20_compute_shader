@@ -1,5 +1,4 @@
 #pragma kernel Init
-#pragma kernel Emit
 
 struct Particle
 {
@@ -42,10 +41,3 @@ void Init(uint id : SV_DispatchThreadID)
 	p.scale = scale;
 	_Particles[id] = p;
 }
-
-[numthreads(THREAD_NUM_X, 1, 1)]
-void Emit(uint id : SV_DispatchThreadID)
-{
-	if (!_Particles[id].active) Init(id);
-}
-
