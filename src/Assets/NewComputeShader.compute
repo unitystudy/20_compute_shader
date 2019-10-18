@@ -1,0 +1,53 @@
+﻿#pragma kernel Init
+#pragma kernel Emit
+#pragma kernel Update
+
+struct Particle
+{
+	int id;
+	bool active;
+	float3 position;
+	float3 rotation;
+	float scale;
+};
+
+RWStructuredBuffer<Particle> _Particles;
+
+float4 _Range;
+
+float rand(float2 seed)
+{
+	return frac(sin(dot(seed.xy, float2(12.9898, 78.233))) * 43758.5453);
+}
+
+float3 rand3(float2 seed)
+{
+	return 2.0 * (float3(rand(seed * 1), rand(seed * 2), rand(seed * 3)) - 0.5);
+}
+
+
+#define THREAD_NUM_X 32
+
+[numthreads(THREAD_NUM_X, 1, 1)]
+void Init(uint id : SV_DispatchThreadID)
+{
+	float2 seed = float2(id + 1, id + 2);
+	float3 pos = rand3(seed);
+	float3 rot = rand3(seed + 3);
+	float  scale = rand(seed + 100) + 0.9 + 0.1;
+
+	Particle p = _Particles[id];
+	p.id = id;
+	p.active = true;
+	p.position = pos * _Range.xyz;
+	p.rotation = rot * float3(0.1,1,0.1);
+	p.scale = scale;
+	_Particles[id] = p;
+}
+
+[numthreads(THREAD_NUM_X, 1, 1)]
+void Emit(uint id : SV_DispatchThreadID)
+{
+	if (!_Particles[id].active) Init(id);
+}
+
