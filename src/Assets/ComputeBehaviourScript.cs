@@ -31,7 +31,6 @@ public class ComputeBehaviourScript : MonoBehaviour
 
     Mesh combinedMesh_;
     ComputeBuffer computeBuffer_;// 計算シェーダ用バッファ
-    int emitKernel_;
     List<Material> materials_ = new List<Material>();
     int numPerMesh_;// メッシュごとのインスタンス数
     int meshNum_;// 描画メッシュ数
@@ -100,7 +99,6 @@ public class ComputeBehaviourScript : MonoBehaviour
         computeBuffer_ = new ComputeBuffer(maxInstanceNum, Marshal.SizeOf(typeof(Particle)), ComputeBufferType.Default);
 
         var initKernel = computeShader.FindKernel("Init");
-        emitKernel_ = computeShader.FindKernel("Emit");
 
         computeShader.SetBuffer(initKernel, "_Particles", computeBuffer_);
         computeShader.SetVector("_Range", range);
