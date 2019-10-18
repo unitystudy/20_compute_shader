@@ -31,7 +31,7 @@ void Init(uint id : SV_DispatchThreadID)
 	float2 seed = float2(id + 1, id + 2);
 	float3 pos = rand3(seed);
 	float3 rot = rand3(seed + 3);
-	float  scale = rand(seed + 100) + 0.9 + 0.1;
+	float  scale = rand(seed + 100) * 1.0 + 1.0;// 1.0-2.0の乱数
 
 	Particle p = _Particles[id];
 	p.id = id;
